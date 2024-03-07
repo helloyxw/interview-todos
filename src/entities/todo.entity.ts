@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { IsBoolean, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 
 @Entity()
 export class Todo extends BaseEntity {
@@ -10,10 +10,9 @@ export class Todo extends BaseEntity {
   @MinLength(1)
   @MaxLength(150)
   @IsString()
-  title: string;
+  todo: string;
 
   @Column()
-  @MinLength(1)
-  @IsString()
-  description: string;
+  @IsBoolean()
+  completed: boolean;
 }

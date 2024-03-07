@@ -8,7 +8,7 @@ import {
     Post,
   } from '@nestjs/common';
   import { ParseIntPipe } from '@nestjs/common/pipes/parse-int.pipe';
-  import { Todo } from './todo.entity';
+  import { Todo } from 'src/entities/todo.entity';
   import { TodosService } from './todos.service';
   
   @Controller('todos')
@@ -20,23 +20,23 @@ import {
       return this.todosService.getTodos();
     }
   
-    @Get(':id')
+    @Get('/:id')
     findOne(@Param('id', ParseIntPipe) id) {
       return this.todosService.findOne(id);
     }
   
-    @Post() create(@Body() todo: Todo) {
+    @Post()
+    create(@Body() todo: Todo) {
       return this.todosService.createTodo(todo);
     }
   
-    @Patch(':id')
-    async editTodo(@Body() todo: Todo, @Param('id') id: number): Promise<Todo> {
-      const todoEdited = await this.todosService.editTodo(id, todo);
-      return todoEdited;
+    @Patch('/:id')
+    update(@Body() todo: Todo, @Param('id') id: number) {
+      return this.todosService.update(id, todo);
     }
   
-    @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id) {
-      this.todosService.remove(id);
+    @Delete('/:id')
+    remove(@Param('id') id: number) {
+      return this.todosService.remove(id);
     }
   }
